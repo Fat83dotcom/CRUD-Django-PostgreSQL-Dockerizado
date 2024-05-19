@@ -3,7 +3,7 @@
 
 * Para rodar o CRUD primeiramente você deverá ter o Doker e o Python instalado no seu computador.
 
-*Você pode instalar um ambiente virtual, na pasta raiz do projeto, mas é opcional.
+* Você pode instalar um ambiente virtual, na pasta raiz do projeto, mas é opcional.
 
 * Na pasta do repositório:
 
@@ -21,7 +21,7 @@
 
 ## Crie a imagem Django:
 
-*(Se quiser, altere as variaveis de ambiente do settings.py)
+* (Se quiser, altere as variaveis de ambiente do settings.py)
 
 ```docker build -t django-app:v1.0 -f django.dockerfile .```
 
