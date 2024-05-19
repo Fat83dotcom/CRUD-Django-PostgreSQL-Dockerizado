@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
     {% block content %}
-        <section class="text-center index teste">
+        <section class="text-center index bg-index p-3">
             <h2>{{msg | safe}}</h2>
             <h2>Preencha os campos abaixo:</h2>
 
-            <form class="text-center" action="{% url 'registrar' %}" method="post">
+            <form class="text-center p-5 d-flex flex-column" action="{% url 'registrar' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="btn btn-secondary m-3" type="submit">Enviar Cadastro</button>

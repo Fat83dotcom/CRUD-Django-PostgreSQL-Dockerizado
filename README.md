@@ -3,11 +3,11 @@
 
 * Para rodar o CRUD primeiramente você deverá ter o Doker e o Python instalado no seu computador.
 
+*Você pode instalar um ambiente virtual, na pasta raiz do projeto, mas é opcional.
+
 * Na pasta do repositório:
 
 ## Crie a imagem do Postgres:
-
-* Execute o Docker file para o Postgres:
 
 ```docker build -t psql:15 -f psql.dockerfile .```
 
@@ -17,25 +17,26 @@
 
 ## Crie o container Postgres:
 
-```docker run -itd -p 5432:5432 --network minha-rede --mount type=bind,source="caminho/completo/até/data/postgres/data",target="/var/lib/postgresql/data" psql:15```
+```docker run -itd --name psql -p 5432:5432 --network minha-rede -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/data/postgres/data":"/var/lib/postgresql/data" psql:15```
 
-* Após cria-lo, copie o nome ou seu código e cole na variavel de ambiente ```ENV POSTGRES_HOST="" no ```django.dockerfile```
+## Crie a imagem Django:
 
+*(Se quiser, altere as variaveis de ambiente do settings.py)
 
-## Crie a imagem do Django:
+```docker build -t django-app:v1.0 -f django.dockerfile .```
 
-* Execute o Docker file para o Django (Se quiser, altere as variaveis de ambiente do settings.py, lembrando que devem ser as mesmas no ```psql.dockerfile```)
+## Crie o container Django:
 
-```docker build -t django-app:teste -f django.dockerfile .```
+```docker run -it -p 8000:8000 --network minha-rede -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/django-app":/django-app -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/web/static/":/web/static/ django-app:v1.0```
 
-* crie o container Django:
-
-```docker run -it -p 8000:8000 --network minha-rede -v "caminho/completo/até/django-app":/django-app django-app:teste```
-
-* para criar um superusuario no Django, entre no container e execute por lá os comandos:
+* para criar um superusuario no Django, entre no container:
 
 ```docker exec -it container /bin/bash```
+
+e execute por lá o comando:
+
 ```python manage.py createsuperuser```
+
 
 
 

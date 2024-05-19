@@ -8,14 +8,20 @@
             <h4>Clique no nome de um cliente para modificar ou apagar.</h4>
             <section class="row">
                 <hr>
+                {% if dados %}
                 {% for dado in dados %}
                 <div class="col p-3 m-3 back-ground-clientes">
                     <p><b><a href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
-                    <p>{{dado.data_nascimento}}</p>
+                    <p>{{dado.nasc}}</p>
                     <p>{{dado.email}}</p>
                     <p>{{dado.cidade}}</p>
                 </div>
                 {% endfor %}
+                {% else %}
+                <div class="col p-3 m-3 back-ground-clientes">
+                    <h4>Não há clientes cadastrados.</h4>
+                </div>
+                {% endif %}
                 <hr>
             </section>
         </section>
