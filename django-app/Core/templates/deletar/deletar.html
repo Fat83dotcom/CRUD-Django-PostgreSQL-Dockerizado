@@ -7,9 +7,9 @@
             <form class="text-center" action="{% url 'delete' pk %}" method="post">
                 {% csrf_token %}
                 {{ forms.as_p }}
-                <button class="btn btn-danger" type="submit">Apagar Cadastro</button>
+                <button class="btn btn-danger shadow-btn" type="submit">Apagar Cadastro</button>
             </form>
-            <a href="{% url 'clientes' 'Operação Cancelada' %}"><button class="btn btn-secondary m-3">Voltar</button></a>
+            <a href="{% url 'clientes' 'Operação Cancelada' %}"><button class="btn btn-secondary m-3 shadow-btn">Voltar</button></a>
         </section>
 
     {% endblock %}

@@ -4,14 +4,14 @@
             <h2 class="m-3">Clientes Cadastrados</h2>
             <h3>{{msg | safe}}</h3>
 
-            <a href="{% url 'index' %}"><button class="btn btn-secondary m-3">Cadastrar Outro</button></a>
+            <a href="{% url 'index' %}"><button class="btn btn-secondary m-3 shadow-btn">Cadastrar Outro</button></a>
             <h4>Clique no nome de um cliente para modificar ou apagar.</h4>
             <section class="row">
                 <hr>
                 {% if dados %}
                 {% for dado in dados %}
                 <div class="col p-3 m-3 back-ground-clientes">
-                    <p><b><a href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
+                    <p><b><a class="shadow-btn p-1" href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
                     <p>{{dado.nasc}}</p>
                     <p>{{dado.email}}</p>
                     <p>{{dado.cidade}}</p>

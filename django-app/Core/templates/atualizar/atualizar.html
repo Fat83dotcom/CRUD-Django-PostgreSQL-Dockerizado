@@ -6,8 +6,8 @@
             <form class="text-center" action="{% url 'update' pk %}" method="post">
                 {% csrf_token %}
                 {{ forms.as_p }}
-                <button class="btn btn-secondary m-3" type="submit">Atualizar Cadastro</button>
+                <button class="btn btn-secondary m-3 shadow-btn" type="submit">Atualizar Cadastro</button>
             </form>
-            <a href="{% url 'deletar' pk %}"><button class="btn btn-danger">Apagar</button></a>
+            <a href="{% url 'deletar' pk %}"><button class="btn btn-danger shadow-btn">Apagar</button></a>
         </section>
     {% endblock %}

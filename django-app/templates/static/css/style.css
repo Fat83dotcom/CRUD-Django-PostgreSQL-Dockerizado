@@ -10,6 +10,7 @@
 .back-ground-clientes{
     background-color: blueviolet;
     border-radius: 5px;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.5);
 }
 .back-ground-clientes a{
     color: aliceblue;
@@ -20,4 +21,10 @@
 }
 .bg-index{
     background-color: #b97070;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.5);
+}
+.shadow-btn{
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.5);
 }

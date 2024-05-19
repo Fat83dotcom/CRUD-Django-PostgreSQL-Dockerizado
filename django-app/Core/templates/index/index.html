@@ -7,7 +7,7 @@
             <form class="text-center p-5 d-flex flex-column" action="{% url 'registrar' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button class="btn btn-secondary m-3" type="submit">Enviar Cadastro</button>
+                <button class="btn btn-secondary m-3 shadow-btn" type="submit">Enviar Cadastro</button>
             </form>
         </section>
     {% endblock %}
