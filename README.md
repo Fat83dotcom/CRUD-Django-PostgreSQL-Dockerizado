@@ -27,11 +27,11 @@
 
 ## Crie o container Django:
 
-```docker run -it -p 8000:8000 --network minha-rede -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/django-app":/django-app -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/web/static/":/web/static/ django-app:v1.0```
+```docker run -it --name django -p 8000:8000 --network minha-rede -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/django-app":/django-app -v "/caminho até a raiz/CRUD-Django-PostgreSQL-Dockerizado/web/static/":/web/static/ django-app:v1.0```
 
 * para criar um superusuario no Django, entre no container:
 
-```docker exec -it container /bin/bash```
+```docker exec -it django /bin/bash```
 
 e execute por lá o comando:
 
