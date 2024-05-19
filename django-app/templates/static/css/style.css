@@ -1,0 +1,23 @@
+.index{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+.back-ground-clientes{
+    background-color: blueviolet;
+    border-radius: 5px;
+}
+.back-ground-clientes a{
+    color: aliceblue;
+    text-decoration: none;
+}
+.back-ground-clientes a:hover{
+    color: burlywood;
+}
+.teste{
+    background-color: #b97070;
+}

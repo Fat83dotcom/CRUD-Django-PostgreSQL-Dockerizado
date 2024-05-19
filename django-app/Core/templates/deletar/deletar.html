@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+    {% block content %}
+        <section class="text-center index">
+            <h2>Exclusão de Registro !</h2>
+            <h3>Esta ação não pode ser revertida, deseja continuar?</h3>
+
+            <form class="text-center" action="{% url 'delete' pk %}" method="post">
+                {% csrf_token %}
+                {{ forms.as_p }}
+                <button class="btn btn-danger" type="submit">Apagar Cadastro</button>
+            </form>
+            <a href="{% url 'clientes' 'Operação Cancelada' %}"><button class="btn btn-secondary m-3">Voltar</button></a>
+        </section>
+
+    {% endblock %}

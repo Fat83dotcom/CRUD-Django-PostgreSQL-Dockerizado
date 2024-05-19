@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+    {% block content %}
+        <section class="text-center index">
+            <h3>Modifique os campos abaixo:</h3>
+
+            <form class="text-center" action="{% url 'update' pk %}" method="post">
+                {% csrf_token %}
+                {{ forms.as_p }}
+                <button class="btn btn-secondary m-3" type="submit">Atualizar Cadastro</button>
+            </form>
+            <a href="{% url 'deletar' pk %}"><button class="btn btn-danger">Apagar</button></a>
+        </section>
+    {% endblock %}
