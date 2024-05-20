@@ -11,7 +11,7 @@
                 {% if dados %}
                 {% for dado in dados %}
                 <div class="col p-3 m-3 back-ground-clientes">
-                    <p><b><a class="shadow-btn p-1" href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
+                    <p class="shadow-btn"><b><a class="p-1" href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
                     <p>{{dado.nasc}}</p>
                     <p>{{dado.email}}</p>
                     <p>{{dado.cidade}}</p>
