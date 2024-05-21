@@ -133,3 +133,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://265f-177-221-254-80.ngrok-free.app',
+    # Adicione outras origens confiáveis aqui
+]
