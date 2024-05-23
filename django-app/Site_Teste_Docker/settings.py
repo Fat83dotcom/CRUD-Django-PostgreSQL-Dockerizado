@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from django.contrib.messages import constants as messages
 from pathlib import Path
 import os
 
@@ -138,3 +138,15 @@ CSRF_TRUSTED_ORIGINS = [
     'https://265f-177-221-254-80.ngrok-free.app',
     # Adicione outras origens confiáveis aqui
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'Core.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Mantenha o backend padrão
+]
+
+MESSAGE_TAGS = {
+    messages.SUCCESS: "alert alert-success",
+    messages.ERROR: "alert alert-danger",
+}
+
+LOGIN_URL = '/login/'

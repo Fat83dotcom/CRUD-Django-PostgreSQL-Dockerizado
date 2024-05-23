@@ -1,23 +1,31 @@
 {% extends 'base.html' %}
-    {% block content %}
-        <section class="text-center index bg-index p-2">
-            <h2>{{msg | safe}}</h2>
-            <h2>Preencha os campos abaixo:</h2>
+{% block content %}
+<section class="text-center bg-index p-2">
+    <h2>{{msg | safe}}</h2>
+    <h2>Preencha os campos abaixo:</h2>
 
-            <form class="text-center p-2 d-flex flex-column" action="{% url 'registrar' %}" method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                <div class="d-flex justify-content-between align-items-center p-1 m-1">
-                    <label class="m-2 " for="{{field.id_for_label}}">{{field.label}}</label>
-                    <div class="d-flex flex-column justify-content-between align-items-center">
-                        <p class="brd-radius">{{ field }}</p>
-                        {% if field.errors %}
-                        <p>{{field.errors}}</p>
-                        {% endif %}
-                    </div>
+    <form class="text-center p-2 d-flex flex-column" action="{% url 'registrar' %}" method="post">
+        {% csrf_token %}
+        {% if form %}
+        {% for field in form %}
+        <div class="form-floating mb-3">
+            {{field}}
+            {% if field.errors %}
+                <div style="color: red; background-color: rgb(241, 192, 192); border-radius: 5px;" class="text-start">
+                    {{field.errors}}
                 </div>
-                {% endfor %}
-                <button class="btn btn-secondary m-3 shadow-btn" type="submit">Enviar Cadastro</button>
-            </form>
-        </section>
-    {% endblock %}
+                {% endif %}
+                {% if field.help_text %}
+                <p style="font-size: smaller;" class="text-start">
+                    {{field.help_text}}
+                </p>
+                {% endif %}
+        
+            <label for="{{field.id_for_label}}">{{field.name}}</label>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <button class="btn btn-secondary m-3 shadow-btn" type="submit">Enviar Cadastro</button>
+    </form>
+</section>
+{% endblock %}

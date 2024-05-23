@@ -2,8 +2,23 @@
 
 <body>
     {% include 'partials/header.html' %}
-    <main class="container d-flex justify-content-center align-items-center flex-column">
+    <main class="container d-flex justify-content-center flex-column">
         <h1 class="m-3 text-center">Cadastro Simples Com Django</h1>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="{{message.tags}}" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <section class="m-1 text-end">
+            {% if request.user.is_authenticated %}
+            <p class="m-1 ">
+                Logado como {{request.user.email}}
+            </p>
+            {% endif %}
+        </section>
         {% block content%}{% endblock %}
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

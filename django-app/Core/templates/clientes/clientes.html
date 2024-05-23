@@ -1,29 +1,49 @@
 {% extends 'base.html' %}
-    {% block content %}
-        <section class="text-center">
-            <h2 class="m-3">Clientes Cadastrados</h2>
-            <h3>{{msg | safe}}</h3>
+{% block content %}
+<section class="text-center">
+    <h2 class="m-3">Clientes Cadastrados</h2>
+    <h3>{{msg | safe}}</h3>
 
-            <a href="{% url 'index' %}"><button class="btn btn-secondary m-3 shadow-btn">Cadastrar Outro</button></a>
-            <h4>Clique no nome de um cliente para modificar ou apagar.</h4>
-            <section class="row">
-                <hr>
-                {% if dados %}
-                {% for dado in dados %}
-                <div class="col p-3 m-3 back-ground-clientes">
-                    <p class="shadow-btn"><b><a class="p-1" href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
-                    <p>{{dado.nasc}}</p>
-                    <p>{{dado.email}}</p>
-                    <p>{{dado.cidade}}</p>
+    <a href="{% url 'index' %}"><button class="btn btn-secondary m-3 shadow-btn">Cadastrar Outro</button></a>
+    <h4>Clique no nome de um cliente para modificar ou apagar.</h4>
+    <section class="row">
+        <hr>
+        {% if dados %}
+        {% for dado in dados %}
+        <div class="col p-3 m-3 back-ground-clientes">
+            <p class="shadow-btn"><b><a class="p-1" href="{% url 'atualizar' dado.id %}">{{dado.nome}}</a></b></p>
+            <p>{{dado.nasc}}</p>
+            <p>{{dado.email}}</p>
+            <p>{{dado.cidade}}</p>
+            <p>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseWidthExample-{{dado.id}}" aria-expanded="false" aria-controls="collapseWidthExample-{{dado.id}}">
+                    Detalhes
+                </button>
+            </p>
+            <div style="min-height: auto;">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample-{{dado.id}}">
+                    <div class="card card-body" style="width: auto;">
+                        <p>Criado por:</p>
+                        <p>{{dado.criado_por}}</p>
+                        <p>Criado em:</p>
+                        <p>{{dado.criado_em}}</p>
+                        <p>Modificado por:</p>
+                        <p>{{dado.modificado_por}}</p>
+                        <p>Modificado em:</p>
+                        <p>{{dado.modificado_em}}</p>
+                    </div>
                 </div>
-                {% endfor %}
-                {% else %}
-                <div class="col p-3 m-3 back-ground-clientes">
-                    <h4>Não há clientes cadastrados.</h4>
-                </div>
-                {% endif %}
-                <hr>
-            </section>
-        </section>
-    {% endblock %}
+            </div>
 
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col p-3 m-3 back-ground-clientes">
+            <h4>Não há clientes cadastrados.</h4>
+        </div>
+        {% endif %}
+        <hr>
+    </section>
+</section>
+{% endblock %}

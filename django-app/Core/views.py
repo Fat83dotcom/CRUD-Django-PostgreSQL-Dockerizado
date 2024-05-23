@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from Core.forms import CadastroForm
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from Core.forms import CadastroForm, LoginForm, UsuarioForm
 from Core.models import CadastroCliente
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class Index(View):
+class Index(LoginRequiredMixin, View):
     title = 'Cadastro'
 
     def get(self, request, *args, **kwargs):
@@ -18,7 +21,7 @@ class Index(View):
         return render(request, 'index/index.html', context)
 
 
-class CadastroView(View):
+class CadastroView(LoginRequiredMixin, View):
     title = 'Cadastrar Cliente'
 
     def get(self, request, param, **kwargs):
@@ -33,14 +36,16 @@ class CadastroView(View):
         return render(request, 'index/index.html', context)
 
 
-class CadastroCreateView(View):
+class CadastroCreateView(LoginRequiredMixin, View):
     title = 'Cadastro'
 
     def post(self, request):
         forms = CadastroForm(request.POST)
 
         if forms.is_valid():
-            forms.save()
+            dados = forms.save(commit=False)
+            dados.criado_por = request.user
+            dados.save()
             confirm = ['Cliente cadastrado com sucesso!']
             url = reverse('clientes', args=confirm)
             return redirect(url)
@@ -57,7 +62,7 @@ class CadastroCreateView(View):
         return redirect('index')
 
 
-class ClienteViews(View):
+class ClienteViews(LoginRequiredMixin, View):
     title = 'Clientes Cadastrados'
 
     def get(self, request, param, **kwargs):
@@ -71,7 +76,7 @@ class ClienteViews(View):
         return render(request, 'clientes/clientes.html', context)
 
 
-class AtuaizarClientesView(View):
+class AtuaizarClientesView(LoginRequiredMixin, View):
     title = 'Atualizar'
 
     def get(self, request, pk):
@@ -87,7 +92,7 @@ class AtuaizarClientesView(View):
         return render(request, 'atualizar/atualizar.html', context)
 
 
-class CadastroUpdateView(View):
+class CadastroUpdateView(LoginRequiredMixin, View):
     title = 'Atualizar'
 
     def post(self, request, pk):
@@ -100,6 +105,8 @@ class CadastroUpdateView(View):
             dados.nasc = forms.cleaned_data['nasc']
             dados.email = forms.cleaned_data['email']
             dados.cidade = forms.cleaned_data['cidade']
+            dados.modificado_por = request.user.username
+            print(request.user.username)
             dados.save()
             confirm = ['Cliente atualizado com sucesso!']
             url = reverse('clientes', args=confirm)
@@ -114,7 +121,7 @@ class CadastroUpdateView(View):
             return render(request, 'atualizar/atualizar.html', context)
 
 
-class DeletarClientesView(View):
+class DeletarClientesView(LoginRequiredMixin, View):
     title = 'Apagando'
 
     def get(self, request, pk):
@@ -128,10 +135,76 @@ class DeletarClientesView(View):
         return render(request, 'deletar/deletar.html', context)
 
 
-class CadastroDeleteView(View):
+class CadastroDeleteView(LoginRequiredMixin, View):
     def post(self, request, pk):
         dados = get_object_or_404(CadastroCliente, pk=pk)
         dados.delete()
         confirm = ['Cliente Apagado com sucesso!']
         url = reverse('clientes', args=confirm)
         return redirect(url)
+
+
+class LoginView(View):
+    title = 'Login'
+
+    def get(self, request, *args, **kwargs):
+        forms = LoginForm()
+        context = {
+            'forms': forms,
+            'title': self.title,
+        }
+
+        return render(request, 'login/login.html', context)
+
+
+class RegistrarUsuarioView(View):
+    title = 'Cadastrar Usuário'
+
+    def get(self, request, *args, **kwargs):
+        reg_ususario = request.session.get('dados_form', None)
+        if reg_ususario:
+            forms = UsuarioForm(reg_ususario)
+        else:
+            forms = UsuarioForm()
+        context = {
+            'title': self.title,
+            'forms': forms,
+        }
+
+        return render(request, 'login/registrarUsuario.html', context)
+
+
+class Login(View):
+    def post(self, request, *args, **kwargs):
+        forms = LoginForm(request.POST)
+
+        if forms.is_valid():
+            auth_usuario = authenticate(
+                email=forms.cleaned_data['usuario'],
+                password=forms.cleaned_data['senha']
+            )
+            if auth_usuario is not None:
+                messages.success(request, 'Login efetuado com sucesso.')
+                login(request, auth_usuario)
+                return redirect('index')
+            else:
+                messages.error(
+                    request, 'Login não efetuado, tente novamente.'
+                )
+        else:
+            messages.error(request, 'Verifique seus dados e tente novamente')
+
+        return redirect('login')
+
+
+class RegistrarUsuario(View):
+    def post(self, request, *args, **kwargs):
+        post = request.POST
+        request.session['dados_form'] = post
+        forms = UsuarioForm(post)
+        if forms.is_valid():
+            forms.save()
+            messages.success(request, 'Usuário criado com sucesso.')
+            del (request.session['dados_form'])
+            return redirect('login')
+        return redirect('reg_usuario')
