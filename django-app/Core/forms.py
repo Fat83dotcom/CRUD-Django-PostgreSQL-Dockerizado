@@ -30,12 +30,12 @@ class CadastroForm(forms.ModelForm):
 class LoginForm(forms.Form):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        add_placeholder(self.fields['usuario'], 'Digite o email.')
-        add_class(self.fields['usuario'], 'form-control')
+        add_placeholder(self.fields['email'], 'Digite o email.')
+        add_class(self.fields['email'], 'form-control')
         add_placeholder(self.fields['senha'], 'Digite a Senha.')
         add_class(self.fields['senha'], 'form-control')
 
-    usuario = forms.CharField(
+    email = forms.CharField(
         widget=forms.EmailInput()
     )
     senha = forms.CharField(
@@ -85,6 +85,17 @@ class UsuarioForm(forms.ModelForm):
         raise ValidationError(
             'A senha não contém os requisitos.',
         )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        existe = User.objects.filter(email=email).exists()
+
+        if existe:
+            raise ValidationError(
+                'Este email não pode ser usado, já existe.'
+            )
+
+        return email
 
     def clean(self):
         cleaned_data = super().clean()

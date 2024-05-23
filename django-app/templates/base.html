@@ -12,11 +12,15 @@
         </div>
         {% endfor %}
         {% endif %}
-        <section class="m-1 text-end">
+        <section class="m-1 d-flex align-items-center justify-content-end">
             {% if request.user.is_authenticated %}
-            <p class="m-1 ">
+            <p class="m-1" style="font-size: smaller;">
                 Logado como {{request.user.email}}
             </p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link" style="font-size: smaller;">sair</button>
+            </form>
             {% endif %}
         </section>
         {% block content%}{% endblock %}

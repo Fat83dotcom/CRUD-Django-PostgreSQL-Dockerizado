@@ -135,7 +135,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://265f-177-221-254-80.ngrok-free.app',
+    'https://f4c8-177-221-254-104.ngrok-free.app',
     # Adicione outras origens confiáveis aqui
 ]
 
@@ -150,3 +150,12 @@ MESSAGE_TAGS = {
 }
 
 LOGIN_URL = '/login/'
+REDIRECT_FIELD_NAME = 'next'
+
+SESSION_COOKIE_AGE = 300
+
+# Expirar a sessão quando o navegador for fechado
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Salvar a sessão a cada solicitação
+SESSION_SAVE_EVERY_REQUEST = True
